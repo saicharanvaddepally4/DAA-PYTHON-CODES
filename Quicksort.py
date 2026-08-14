@@ -18,4 +18,5 @@ def quick_sort(arr):
 arr = list(map(int, input("Enter numbers: ").split()))
 
 print("Before Sorting:", arr)
-print("After Sorting:", quick_sort(arr))
+print("After Sorting:", quick_sort(arr)) 
+
