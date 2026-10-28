@@ -1,0 +1,63 @@
+
+def matrix_chain_order(p):
+    n = len(p) - 1
+
+    # Create DP table
+    m = [[0] * n for _ in range(n)]
+
+    # Store the split positions
+    s = [[0] * n for _ in range(n)]
+
+    # Chain length
+    for L in range(2, n + 1):
+        for i in range(n - L + 1):
+            j = i + L - 1
+            m[i][j] = float('inf')
+
+            for k in range(i, j):
+                cost = (
+                    m[i][k]
+                    + m[k + 1][j]
+                    + p[i] * p[k + 1] * p[j + 1]
+                )
+
+                if cost < m[i][j]:
+                    m[i][j] = cost
+                    s[i][j] = k
+
+    return m, s
+
+
+def print_parenthesization(s, i, j):
+    if i == j:
+        print(f"A{i + 1}", end="")
+    else:
+        print("(", end="")
+        print_parenthesization(s, i, s[i][j])
+        print(" x ", end="")
+        print_parenthesization(s, s[i][j] + 1, j)
+        print(")", end="")
+
+
+# Dimensions of 6 matrices
+p = [5, 10, 3, 12, 5, 50, 6]
+
+m, s = matrix_chain_order(p)
+
+print("Matrix Chain Multiplication")
+print("--------------------------------")
+
+print("Matrix dimensions:")
+for i in range(len(p) - 1):
+    print(f"A{i + 1} = {p[i]} x {p[i + 1]}")
+
+print("\nDP Cost Table:")
+for row in m:
+    print(["-" if x == float('inf') else x for x in row])
+
+print("\nMinimum number of scalar multiplications:")
+print(m[0][len(p) - 2])
+
+print("\nOptimal parenthesization:")
+print_parenthesization(s, 0, len(p) - 2)
+print()
