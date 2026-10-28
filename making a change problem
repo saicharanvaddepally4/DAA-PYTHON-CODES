@@ -1,0 +1,12 @@
+
+def change(coins, amount):
+    coins.sort(reverse=True)
+    for c in coins:
+        n = amount // c
+        if n > 0:
+            print(c, "x", n, "=", c * n)
+            amount %= c
+    print("Remaining amount =", amount)
+
+coins = [1, 2, 5, 10, 20, 50, 100]
+change(coins, 786)
