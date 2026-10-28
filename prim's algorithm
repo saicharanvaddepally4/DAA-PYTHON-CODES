@@ -1,0 +1,26 @@
+
+g = [
+    [0, 2, 0, 6, 0],
+    [2, 0, 3, 8, 5],
+    [0, 3, 0, 0, 7],
+    [6, 8, 0, 0, 9],
+    [0, 5, 7, 9, 0]
+]
+
+n = len(g)
+visited = [0] * n
+visited[0] = 1
+cost = 0
+
+for _ in range(n - 1):
+    m = 999
+    for i in range(n):
+        for j in range(n):
+            if visited[i] and not visited[j] and g[i][j] and g[i][j] < m:
+                m = g[i][j]
+                x, y = i, j
+    print(x, "-", y, ":", m)
+    cost += m
+    visited[y] = 1
+
+print("Minimum Cost =", cost)
